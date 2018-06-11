@@ -1,0 +1,16 @@
+# build image
+FROM microsoft/aspnetcore-build:2.0 AS build
+EXPOSE 80
+WORKDIR /app
+
+COPY *.csproj .
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish -c Release -o ./out
+
+# runtime image
+FROM microsoft/aspnetcore:2.0
+WORKDIR /app
+COPY --from=build ./app/out .
+ENTRYPOINT ["dotnet", "IdentityMicroservice.dll"]

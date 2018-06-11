@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  identitymicroservice:
+    image: ${DOCKER_REGISTRY}identitymicroservice
+    ports:
+      - "5100:80"
+    build:
+      context: .
+      dockerfile: IdentityMicroservice/Dockerfile
